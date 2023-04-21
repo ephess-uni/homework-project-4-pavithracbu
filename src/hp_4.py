@@ -1,9 +1,9 @@
 # hp_4.py
 #
 from datetime import datetime, timedelta
-from csv import DictReader, DictWriter
+from csv import DictReader
 from collections import defaultdict
-
+import csv
 
 def reformat_dates(old_dates):
     """Accepts a list of date strings in format yyyy-mm-dd, re-formats each
@@ -68,7 +68,7 @@ def fees_report(infile, outfile):
     result = [[key,val] for key, val in result_dict.items()]
 
     with open(outfile,'w') as f:
-        outfile = DictWriter(f)
+        outfile = csv.writer(f)
         outfile.writerow(["patron_id","late_fees"])
         outfile.writerows(result)
 
