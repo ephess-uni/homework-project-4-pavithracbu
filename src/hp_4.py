@@ -21,7 +21,7 @@ def date_range(start, n):
     if isinstance(start, str) is False:
         raise TypeError("Start must be a string")
     if isinstance(n, int) is False:
-        raise TypeError(" n must be in an integer")
+        raise TypeError("n must be in an integer")
 
     reformatted_date = datetime.strptime(start, '%Y-%m-%d')
     result = [reformatted_date]
@@ -57,7 +57,7 @@ def fees_report(infile, outfile):
     for (a, b, c) in zip(patron_id,date_returned,date_due):
         numdays=(datetime.strptime(b, '%m/%d/%Y')-datetime.strptime(c, '%m/%d/%Y')).days
         if numdays<0:
-            latefee=0.0
+            latefee=0.00
         else:
             latefee = round(numdays*0.25,2)
         if a in result_dict:
@@ -65,7 +65,7 @@ def fees_report(infile, outfile):
         else:
             result_dict[a] = latefee
 
-    result = [[key,val] for key, val in result_dict.items()]
+    result = [[str(key), str('{:.2f}'.format(val))] for key, val in result_dict.items()]
 
     with open(outfile,'w') as f:
         outfile = csv.writer(f)
